@@ -16,13 +16,6 @@ def on_message(client, userdata, message):
 
     print("msg_json: ", msg_json)
 
-    # msg_json_reencoded = json.dumps("{'idx': " + str(msg_json['idx']) + "}")
-    # if(msg_json.get('nvalue') != None):
-    #     msg_json_reencoded = json.dumps("{'idx': " + str(msg_json['idx']) + ", 'nvalue': " + str(msg_json['nvalue']) + "}")
-
-    # if(msg_json.get('svalue1') != None):
-    #     msg_json_reencoded = json.dumps("{'idx': " + str(msg_json['idx']) + ", 'svalue1': " + str(msg_json['svalue1']) + "}")
-
     msg_json_shortened  = {"idx": msg_json['idx']}
     if(msg_json.get('svalue1') != None):
         msg_json_shortened["svalue1"] = msg_json['svalue1']
@@ -38,9 +31,9 @@ def on_message(client, userdata, message):
     result = client.publish(topic, msg_json_reencoded)
     status = result[0]
     if status == 0:
-        print(" Message published to topic " + topic)
+        print(f"Message published to topic {topic} msg size : {len(msg_json_reencoded)}")
     else:
-        print("Failed to send message to topic " + topic)
+        print(f"Failed to send message to topic {topic} msg size : {len(msg_json_reencoded)}")
 
 broker_hostname = "1.tcp.eu.ngrok.io"
 port = 21589
