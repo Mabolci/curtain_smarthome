@@ -26,18 +26,13 @@ const char* mqtt_server = "1.tcp.eu.ngrok.io";
 short int mqtt_port = 21589;
 
 void callback(char* topic, byte* payload, unsigned int length) {
- 
-  Serial.print("Message arrived in topic: ");
-  Serial.println(topic);
- 
-  Serial.print("Message:");
+  Serial.print("Message arrived [");
+  Serial.print(topic);
+  Serial.print("] ");
   for (int i = 0; i < length; i++) {
     Serial.print((char)payload[i]);
   }
- 
   Serial.println();
-  Serial.println("-----------------------");
- 
 }
 
 void reconnect() {
@@ -45,10 +40,12 @@ void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (client.connect("JK ESP32", mqtt_username, mqtt_pwd)) {
-      Serial.println("connected");
+    if (client.connect("JK_ESP32_dummy", mqtt_username, mqtt_pwd)) {
+      Serial.print("connected with ");
+      Serial.print(mqtt_username);
+      Serial.println("!");
       // Subscribe
-      client.subscribe("#");
+      client.subscribe("esp/out");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -92,7 +89,6 @@ void setup() {
   // mqtt starts
   client.setServer(mqtt_server, mqtt_port);
   client.setCallback(callback);
-  reconnect();
 }
 
 
