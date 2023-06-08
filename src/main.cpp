@@ -1,5 +1,8 @@
 #include <Arduino.h>
 #include <Stepper.h>
+#include <WiFi.h>
+#include <PubSubClient.h>
+#include <ArduinoJson.h>
 
 #define IN1 13
 #define IN2 12
