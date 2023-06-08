@@ -16,7 +16,23 @@ def on_message(client, userdata, message):
 
     print("msg_json: ", msg_json)
 
-    msg_json_reencoded = json.dumps("{'idx': " + str(msg_json['idx']) + ", 'nvalue': " + str(msg_json['nvalue']) + "'}")
+    # msg_json_reencoded = json.dumps("{'idx': " + str(msg_json['idx']) + "}")
+    # if(msg_json.get('nvalue') != None):
+    #     msg_json_reencoded = json.dumps("{'idx': " + str(msg_json['idx']) + ", 'nvalue': " + str(msg_json['nvalue']) + "}")
+
+    # if(msg_json.get('svalue1') != None):
+    #     msg_json_reencoded = json.dumps("{'idx': " + str(msg_json['idx']) + ", 'svalue1': " + str(msg_json['svalue1']) + "}")
+
+    msg_json_shortened  = {"idx": msg_json['idx']}
+    if(msg_json.get('svalue1') != None):
+        msg_json_shortened["svalue1"] = msg_json['svalue1']
+    if(msg_json.get('nvalue') != None):
+        msg_json_shortened["nvalue"] = msg_json['nvalue']
+    
+    print("msg_json_reencoded: ", msg_json_shortened)
+
+    msg_json_reencoded = json.dumps(msg_json_shortened)
+    
 
     topic = "esp/out"
     result = client.publish(topic, msg_json_reencoded)
