@@ -38,7 +38,7 @@ void reconnect() {
     if (client.connect("JK ESP32")) {
       Serial.println("connected");
       // Subscribe
-      client.subscribe("esp32/output");
+      client.subscribe("domoticz/out/4");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -79,13 +79,17 @@ void setup() {
 
   // wifi connection ends
 
-
+  // mqtt starts
+  client.setServer(mqtt_server, mqtt_port);
+  client.setCallback(callback);
 
 }
 
 
 void loop() {
-
+  if (!client.connected()) {
+    reconnect();
+  }
 
   // myStepper.step(stepsPerRevolution);
 
@@ -96,7 +100,6 @@ void loop() {
 
   delay(500);
 
-  Serial.println(ssid);
-  Serial.println(password);
-
+  
+  client.loop();
 }
