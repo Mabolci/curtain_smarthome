@@ -25,9 +25,19 @@ PubSubClient client(espClient);
 const char* mqtt_server = "1.tcp.eu.ngrok.io";
 short int mqtt_port = 21589;
 
-void callback(char* topic, byte* message, unsigned int length) {
-  Serial.print("Message arrived on topic: ");
-  Serial.print(topic);
+void callback(char* topic, byte* payload, unsigned int length) {
+ 
+  Serial.print("Message arrived in topic: ");
+  Serial.println(topic);
+ 
+  Serial.print("Message:");
+  for (int i = 0; i < length; i++) {
+    Serial.print((char)payload[i]);
+  }
+ 
+  Serial.println();
+  Serial.println("-----------------------");
+ 
 }
 
 void reconnect() {
@@ -35,10 +45,10 @@ void reconnect() {
   while (!client.connected()) {
     Serial.print("Attempting MQTT connection...");
     // Attempt to connect
-    if (client.connect("JK ESP32")) {
+    if (client.connect("JK ESP32", mqtt_username, mqtt_pwd)) {
       Serial.println("connected");
       // Subscribe
-      client.subscribe("domoticz/out/4");
+      client.subscribe("#");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -82,23 +92,17 @@ void setup() {
   // mqtt starts
   client.setServer(mqtt_server, mqtt_port);
   client.setCallback(callback);
-
+  reconnect();
 }
 
 
 void loop() {
+  // static char buffer[70];
   if (!client.connected()) {
     reconnect();
   }
 
   // myStepper.step(stepsPerRevolution);
-
-  // static char buffer[70];
-  // if (!client.connected()) {
-  //   reconnect();
-  // }
-
-  delay(500);
 
   
   client.loop();
