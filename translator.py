@@ -18,24 +18,16 @@ def on_message(client, userdata, message):
     msg_json = json.loads(msg_decoded)
 
     print("msg_json: ", msg_json)
-
-    # msg_json_shortened  = {"idx": msg_json['idx']}
-    # if(msg_json.get('svalue1') != None):
-    #     msg_json_shortened["svalue1"] = msg_json['svalue1']
-    # if(msg_json.get('nvalue') != None):
-    #     msg_json_shortened["nvalue"] = msg_json['nvalue']
     
     with open('translator.conf') as config_file:
-        lines = [line.strip() for line in config_file]
-        print("lines: ", lines)
-        msg_json_shortened = json_factory(msg_json, lines)
+        msg_json_shortened = json_factory(msg_json, [line.strip() for line in config_file])
 
     print("msg_json_shortened: ", msg_json_shortened)
 
     msg_json_reencoded = json.dumps(msg_json_shortened)
     
 
-    topic = "esp/out"
+    topic = f'esp/out/{msg_json_shortened["idx"]}"]'
     result = client.publish(topic, msg_json_reencoded)
     status = result[0]
     if status == 0:
