@@ -33,14 +33,30 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.print((char)payload[i]);
   }
   Serial.println();
+
+  // deserialize json
+  StaticJsonDocument<200> doc;
+  deserializeJson(doc, payload, length);
+
+  // read values
+  short unsigned int idx = doc["idx"];
+  if(idx == 4) {
+    short unsigned int value = doc["svalue1"];
+    myStepper.step(value * stepsPerRevolution);
+
+    Serial.print("idx: ");
+    Serial.println(idx);
+    Serial.print("value: ");
+    Serial.println(value);
+  }
 }
 
 void reconnect() {
   // Loop until we're reconnected
   while (!client.connected()) {
-    Serial.print("Attempting MQTT connection...");
+    Serial.println("Attempting MQTT connection...");
     // Attempt to connect
-    if (client.connect("JK_ESP32_dummy", mqtt_username, mqtt_pwd)) {
+    if (client.connect("JK_ESP32", mqtt_username, mqtt_pwd)) {
       Serial.print("connected with ");
       Serial.print(mqtt_username);
       Serial.println("!");
@@ -49,7 +65,7 @@ void reconnect() {
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
-      Serial.println(" try again in 5 seconds");
+      Serial.println(" try again in 5 seconds...");
       // Wait 5 seconds before retrying
       delay(5000);
     }
