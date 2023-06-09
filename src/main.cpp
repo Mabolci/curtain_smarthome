@@ -52,6 +52,9 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.println(diff * stepMultiplier);
 
     myStepper.step(diff * stepMultiplier);
+  } else if(idx == 5) {
+    currentPos = 0;
+    Serial.println("Resetting stepper position");
   }
 }
 
@@ -65,9 +68,11 @@ void reconnect() {
       Serial.print(mqtt_username);
       Serial.println("!");
       // Subscribe
-      Serial.print("Subscribing to topic: ");
+      Serial.println("Subscribing to topics:");
       Serial.println("esp/out/4");
+      Serial.println("esp/out/5");
       client.subscribe("esp/out/4");
+      client.subscribe("esp/out/5");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
