@@ -27,7 +27,7 @@ def on_message(client, userdata, message):
     msg_json_reencoded = json.dumps(msg_json_shortened)
     
 
-    topic = f'esp/out/{msg_json_shortened["idx"]}"]'
+    topic = f'esp/out/{msg_json_shortened["idx"]}'
     result = client.publish(topic, msg_json_reencoded)
     status = result[0]
     if status == 0:

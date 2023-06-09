@@ -65,7 +65,9 @@ void reconnect() {
       Serial.print(mqtt_username);
       Serial.println("!");
       // Subscribe
-      client.subscribe("esp/out");
+      Serial.print("Subscribing to topic: ");
+      Serial.println("esp/out/4");
+      client.subscribe("esp/out/4");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
