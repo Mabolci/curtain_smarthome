@@ -37,7 +37,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   Serial.println();
 
   // deserialize json
-  StaticJsonDocument<200> doc;
+  StaticJsonDocument<244> doc;
   deserializeJson(doc, payload, length);
 
   // read values
