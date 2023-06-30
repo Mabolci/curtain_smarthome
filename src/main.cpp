@@ -14,7 +14,7 @@
 const int stepsPerRevolution = 1024;  // change this to fit the number of steps per revolution
 Stepper myStepper(stepsPerRevolution, IN1, IN3, IN2, IN4);
 unsigned short int currentPos = 0;
-unsigned short int stepMultiplier = 64;
+unsigned short int stepMultiplier = 0;
 
 // stepper definitions end
 
@@ -55,6 +55,10 @@ void callback(char* topic, byte* payload, unsigned int length) {
   } else if(idx == 5) {
     currentPos = 0;
     Serial.println("Resetting stepper position");
+  } else if(idx == 17) {
+    stepMultiplier = doc["svalue1"];
+    Serial.print("Changed step multiplier to: ");
+    Serial.println(stepMultiplier);
   }
 }
 
@@ -71,8 +75,10 @@ void reconnect() {
       Serial.println("Subscribing to topics:");
       Serial.println("esp/out/4");
       Serial.println("esp/out/5");
+      Serial.println("esp/out/17");
       client.subscribe("esp/out/4");
       client.subscribe("esp/out/5");
+      client.subscribe("esp/out/17");
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
