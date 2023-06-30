@@ -62,6 +62,18 @@ void callback(char* topic, byte* payload, unsigned int length) {
   }
 }
 
+void requestState() {
+  // publish state
+  StaticJsonDocument<244> doc;
+  doc["command"] = "getdeviceinfo";
+  doc["idx"] = 17;
+  char buffer[244];
+  serializeJson(doc, buffer);
+  client.publish("domoticz/in", buffer);
+  Serial.print("published: ");
+  Serial.println(buffer);
+}
+
 void reconnect() {
   // Loop until we're reconnected
   while (!client.connected()) {
@@ -79,6 +91,8 @@ void reconnect() {
       client.subscribe("esp/out/4");
       client.subscribe("esp/out/5");
       client.subscribe("esp/out/17");
+
+      requestState();
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
@@ -88,6 +102,7 @@ void reconnect() {
     }
   }
 }
+
 
 // mqtt definitions end
 
