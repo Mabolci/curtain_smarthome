@@ -39,7 +39,9 @@ ESP family microcontrollers can only recieve MQTT messages of maximum length of 
 Run translator.py file using python 3.9 or higher. Additional libraries are required, all avilable via PIP.
 
 ## Configuration
-The translator can be used for other MQTT devices, not only the curtain. In order to change forwarded messages edit the *translator.conf* file. Each line represent a single JSON field that will be forwarded. Ex.
+The translator can be used for other MQTT devices, not only the curtain. In order to change forwarded messages edit the *translator.conf* file. Each line represent a single JSON field that will be forwarded.
+
+Ex.
 
 ```
 idx
@@ -48,3 +50,5 @@ nvalue
 ```
 
 Above config file will forward the **idx**, **svalue1** and **nvalue** fields.
+
+Recieved and sent messages are visible in console.
