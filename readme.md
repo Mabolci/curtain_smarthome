@@ -23,10 +23,10 @@ char* mqtt_pwd = "umpanumiw";
 ## Hardware
 | ESP32 GPIO    | Stepper Controller |
 | ------ | ------- |
-| 13    |   | IN1 |
-| 12    |   | IN2 |
-| 14    |   | IN3 |
-| 27    |   | IN4 |
+| 13    | IN1 |
+| 12    | IN2 |
+| 14    | IN3 |
+| 27    | IN4 |
 
 ## Debugging
 Running code logs can be seen at runtime using a serial motnitor. Logs are sent using 115200 boundrate. To translate exceptions core dumps use exception decoder.
