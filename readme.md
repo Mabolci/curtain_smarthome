@@ -33,5 +33,18 @@ Connect your ESP32 to stepper controller in the following way:
 Running code logs can be seen at runtime using a serial motnitor. Logs are sent using 115200 boundrate. To translate exceptions core dumps use exception decoder.
 
 # Translator
-ESP family microcontrollers can only recieve MQTT messages of maximum length of about 244 characters. As by default Domoticz messages are much longer, a proxy is needed.
+ESP family microcontrollers can only recieve MQTT messages of maximum length of about 244 characters. As by default Domoticz messages are much longer, a proxy is needed. This proxy shortens the messages written to *domoticz/out* MQTT broker topic by removing unnecessary JSON fields, and forwards them to *esp/out* topic.
 
+## Usage
+Run translator.py file using python 3.9 or higher. Additional libraries are required, all avilable via PIP.
+
+## Configuration
+The translator can be used for other MQTT devices, not only the curtain. In order to change forwarded messages edit the *translator.conf* file. Each line represent a single JSON field that will be forwarded. Ex.
+
+```
+idx
+svalue1
+nvalue
+```
+
+Above config file will forward the **idx**, **svalue1** and **nvalue** fields.
