@@ -21,7 +21,7 @@ char* mqtt_pwd = "umpanumiw";
 
 ## Hardware
 | ESP32 GPIO    | Stepper Controller
-| :---  |   | ---:
+| ------ | ------- |
 | 13    |   | IN1
 | 12    |   | IN2
 | 14    |   | IN3
